@@ -1,0 +1,57 @@
+{
+	"exampleRoutes": {
+		"getExample": {
+			"name": "GET Example",
+			"description": "Example GET Route",
+			"params": [],
+			"type": "GET",
+			"primaryFunctionFile": "utils/example/example.js",
+			"primaryFunction": "getExample"
+		},
+		"postExample": {
+			"name": "POST Example",
+			"description": "Example POST Route",
+			"type": "POST",
+			"primaryFunctionFile": "utils/example/example.js",
+			"primaryFunction": "postExample"
+		},
+		"alternativeEndpointExample": {
+			"name": "Alternative Example",
+			"description": "This route uses an alternative endpoint",
+			"endpoint": "foo/bar",
+			"type": "POST",
+			"primaryFunctionFile": "utils/example/example.js",
+			"primaryFunction": "getExample"
+		}
+	},
+	"accounts": {
+		"login": {
+			"name": "Login",
+			"description": "Logs in a user",
+			"type": "POST",
+			"primaryFunctionFile": "utils/accounts/accounts.js",
+			"primaryFunction": "login"
+		},
+		"createAccount": {
+			"name": "Create Account",
+			"description": "Creates an account given a username and hashed password.",
+			"type": "POST",
+			"primaryFunctionFile": "utils/accounts/accounts.js",
+			"primaryFunction": "createAccount"
+		},
+		"getUserPerms": {
+			"name": "Get User Permissions",
+			"description": "Gets a user's permissions, returned as an array",
+			"type": "POST",
+			"primaryFunctionFile": "utils/accounts/permissions.js",
+			"primaryFunction": "getUserPermissions"
+		},
+		"updateAccount": {
+			"name": "Update Account",
+			"description": "Update information about a user's account",
+			"type": "POST",
+			"primaryFunctionFile": "utils/accounts/accounts.js",
+			"primaryFunction": "updateAccount"
+		}
+	}
+}

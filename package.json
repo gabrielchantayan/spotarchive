@@ -1,0 +1,31 @@
+{
+	"name": "Spotarchive",
+	"description": "Spotify Playlist Archiver",
+	"author": "Gabriel Chantayan",
+	"version": "0.0.0",
+	"type": "module",
+	"main": "server.js",
+	"directories": {
+		"test": "tests"
+	},
+	"scripts": {
+		"dev-server": "nodemon -r dotenv/config --trace-warnings server.js dotenv_config_path=./.env.dev -e js",
+		"dev-client": "npm run dev --prefix client",
+		"build": "npm run build --prefix client",
+		"dev": "concurrently \"npm run dev-server\" \"npm run dev-client\"",
+		"generateAPI": "node ./devtools/tools/generateAPI.js",
+		"generateLocales": "node ./devtools/tools/generateLocales.js"
+	},
+	"dependencies": {
+		"axios": "^0.27.2",
+		"bcrypt": "^5.1.1",
+		"concurrently": "^7.4.0",
+		"cors": "^2.8.5",
+		"dotenv": "^16.0.2",
+		"express": "^4.18.1",
+		"mariadb": "^3.3.0",
+		"mongodb": "^6.3.0",
+		"nextui-cli": "^0.3.0",
+		"nodemon": "^2.0.20"
+	}
+}

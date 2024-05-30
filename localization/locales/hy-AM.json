@@ -1,0 +1,13 @@
+{
+    "info" : {
+        "version" : 1,
+        "locale" : "hy-AM",
+        "name" : "Հայերեն",
+        "fallbacks" : ["en-US", "fr-FR"]
+    },
+    "entries" : {
+        "someText" : "Էս տեքստ ա։",
+        "someMoreText" : "Էս ևս մի քանի տեքստ ա։",
+        "armOnly" : "Էս տեքստ միայն հայերեն ա։ Այլ լեզուներ կտեսնեն միայն տեքստի անունը։"
+    }
+}

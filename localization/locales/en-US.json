@@ -1,0 +1,12 @@
+{
+    "info" : {
+        "version" : 1,
+        "locale" : "en-US",
+        "name" : "English (US)"
+    },
+    "entries" : {
+		"someText": "This is some text.",
+		"someMoreText": "This is some more text",
+		"engOnly": "This is a string that only exists in English. Other languages will use this for fallback"
+	}
+}

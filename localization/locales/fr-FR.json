@@ -1,0 +1,13 @@
+{
+    "info" : {
+        "version" : 1,
+        "locale" : "fr-FR",
+        "name" : "Français (FR)",
+        "fallbacks" : ["en-US"]
+    },
+    "entries" : {
+		"someText": "C'est un texte",
+		"someMoreText": "C'est un peu plus de texte",
+		"freOnly": "C'est un texte qui existe seulment en Français. Les autres langues afficheront uniquement le nom de string."
+	}
+}
