@@ -3,7 +3,6 @@ import express from 'express'; // Webserver
 import routes from './routes/index'; // API Routes
 import cors from 'cors';
 import initialize from './utils/server/initialize';
-import queryString from 'query-string';
 
 // Set up on port
 const port = process.env.PORT || 80;
@@ -49,22 +48,22 @@ const main = () => {
 	var client_id = 'CLIENT_ID';
 	var redirect_uri = 'http://localhost:8888/callback';
 
-	app.get('/login', function (req, res) {
-		var state = 'dhwwow13odcv34dd';
-		var scope =
-			'user-read-private user-read-email playlist-read-private playlist-modify-private   ugc-image-upload';
+	// app.get('/login', function (req, res) {
+	// 	var state = 'dhwwow13odcv34dd';
+	// 	var scope =
+	// 		'user-read-private user-read-email playlist-read-private playlist-modify-private   ugc-image-upload';
 
-		res.redirect(
-			'https://accounts.spotify.com/authorize?' +
-				queryString.stringify({
-					response_type: 'code',
-					client_id: client_id,
-					scope: scope,
-					redirect_uri: redirect_uri,
-					state: state,
-				})
-		);
-	});
+	// 	res.redirect(
+	// 		'https://accounts.spotify.com/authorize?' +
+	// 			queryString.stringify({
+	// 				response_type: 'code',
+	// 				client_id: client_id,
+	// 				scope: scope,
+	// 				redirect_uri: redirect_uri,
+	// 				state: state,
+	// 			})
+	// 	);
+	// });
 
 	// If we are in prod, use the build folder
 	if (process.env.NODE_ENV == 'production') {

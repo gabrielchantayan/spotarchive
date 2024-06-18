@@ -6,7 +6,7 @@ import { successHandler } from '../../utils/misc/miscUtils';
 // Gets a user's permissions, returned as an array
 const getUserPerms = asyncWrapper(async (req, res) => {
 
-    const ret = await mainFunction(req);
+    const ret = await mainFunction(req.username, req.token);
 
     res.status(200).json(successHandler(true, null, ret));
 

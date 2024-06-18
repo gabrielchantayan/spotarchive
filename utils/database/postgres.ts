@@ -1,12 +1,5 @@
-
-
 //Import postgres
 import * as pg from 'pg';
-
-
-
-
-
 
 const { Client } = pg;
 const client = new Client({
@@ -27,7 +20,6 @@ const client = new Client({
  * @return {Promise<boolean>} A promise that resolves to `true` if the database is successfully initialized.
  */
 const initDB = async () => {
-
 	// TODO: Make this less janky
 	try {
 		// Create the database
@@ -35,8 +27,6 @@ const initDB = async () => {
 			text: 'CREATE DATABASE IF NOT EXISTS VALUES($1)',
 			values: [process.env.DB_NAME],
 		});
-
-
 
 		// Create tables
 		// await createTable('users');
@@ -48,17 +38,12 @@ const initDB = async () => {
 		// 	if (err) throw err;
 		// 	console.log(result);
 		// });
-
-	} catch (err) {
-
-	}
-	
+	} catch (err) {}
 
 	return true;
 };
 
 const createTable = async (table, columns) => {
-	
 	// Create table ${table} with columns ${columns} in database spotarchive
 
 	let sql = `CREATE TABLE IF NOT EXISTS ${table} (${columns})`;
@@ -71,29 +56,18 @@ const createTable = async (table, columns) => {
 const checkIfExists = async (table, query) => {
 	// Connect to the DB then to the collection
 	// const db = client.db(dbName);
-	// const collection = db.collection(collectionName);	
+	// const collection = db.collection(collectionName);
 	return true;
-}
+};
 
-const insert = async (table: string, query) => {
+const insert = async (table: string, query) => {};
 
-}
+const findAll = async (table: string) => {};
 
-const findAll = async (table: string) => {
+const findOne = async (table: string, query) => {};
 
-}
+const find = async (query) => {};
 
-const findOne = async (table: string, query) => {
+const update = async (table: string, query, updatedValue) => {};
 
-}
-
-const find = async ( query) => {
-
-}
-
-const update = async (table : string, query, updatedValue) => {
-
-}
-
-export { initDB, createTable, checkIfExists, insert, findAll, findOne , find, update};
-
+export { initDB, createTable, checkIfExists, insert, findAll, findOne, find, update };

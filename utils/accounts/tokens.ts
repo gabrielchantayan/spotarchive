@@ -1,4 +1,4 @@
-import * as db from '../database/postgres.js';
+import * as db from '../database/postgres';
 import { successHandler } from '../misc/miscUtils';
 
 /**

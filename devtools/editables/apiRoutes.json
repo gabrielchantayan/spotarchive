@@ -1,29 +1,4 @@
 {
-	"exampleRoutes": {
-		"getExample": {
-			"name": "GET Example",
-			"description": "Example GET Route",
-			"params": [],
-			"type": "GET",
-			"primaryFunctionFile": "utils/example/example",
-			"primaryFunction": "getExample"
-		},
-		"postExample": {
-			"name": "POST Example",
-			"description": "Example POST Route",
-			"type": "POST",
-			"primaryFunctionFile": "utils/example/example",
-			"primaryFunction": "postExample"
-		},
-		"alternativeEndpointExample": {
-			"name": "Alternative Example",
-			"description": "This route uses an alternative endpoint",
-			"endpoint": "foo/bar",
-			"type": "POST",
-			"primaryFunctionFile": "utils/example/example",
-			"primaryFunction": "getExample"
-		}
-	},
 	"accounts": {
 		"login": {
 			"name": "Login",
@@ -43,6 +18,7 @@
 			"name": "Get User Permissions",
 			"description": "Gets a user's permissions, returned as an array",
 			"type": "POST",
+			"functionArgs" : "req.username, req.token",
 			"primaryFunctionFile": "utils/accounts/permissions",
 			"primaryFunction": "getUserPermissions"
 		},

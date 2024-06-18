@@ -1,4 +1,4 @@
-import { initDB } from "../database/postgres.js"
+import { initDB } from "../database/postgres"
 
 const initialize = async () => {
 

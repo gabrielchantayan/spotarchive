@@ -6,7 +6,7 @@ const getExample = () => {
 	return s(true, 'GET Success!', null);
 };
 
-const postExample = () => {
+const postExample = (req) => {
 	return s(true, 'POST Success!', null);
 };
 

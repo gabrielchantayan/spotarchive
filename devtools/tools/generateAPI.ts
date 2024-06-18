@@ -48,6 +48,8 @@ const main = async () => {
  * @param {Object} data The endpoint's data as specified in apiRoutes.json
  */
 const generateControllerFile = async (route, endpoint, data) => {
+
+	console.log(data)
 	// The file
 	let file = 
 `import asyncWrapper from '../../middleware/asyncWrapper';
@@ -58,7 +60,7 @@ import { successHandler } from '../../utils/misc/miscUtils';
 // ${data.description}
 const ${endpoint} = asyncWrapper(async (req, res) => {
 
-    const ret = await mainFunction(req);
+    const ret = await mainFunction(${data.hasOwnProperty('functionArgs') ? data.functionArgs : 'req'});
 
     res.status(200).json(successHandler(true, null, ret));
 
