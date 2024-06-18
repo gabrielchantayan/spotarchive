@@ -7,7 +7,7 @@ import { checkAndCreateDir } from '../../code/files';
  * @param {String} endpoint The endpoint
  * @param {Object} data The endpoint's data as specified in apiRoutes.json
  */
-const generateControllerFile = async (route, endpoint, data) => {
+const generateControllerFile = async (service: string, route, endpoint, data) => {
 	console.log(data);
 	// The file
 	let file = `import asyncWrapper from '../../middleware/asyncWrapper';
@@ -28,8 +28,8 @@ export default ${endpoint};
 `;
 
 	// Write the file
-	await writeFile(`./controllers/${route}/${endpoint}.ts`, file);
-	console.log(`Wrote ./controllers/${route}/${endpoint}.ts`);
+	await writeFile(`../${service}/controllers/${route}/${endpoint}.ts`, file);
+	console.log(`Wrote ${service}/controllers/${route}/${endpoint}.ts`);
 };
 
 /**
@@ -37,7 +37,7 @@ export default ${endpoint};
  * @param {String} route The route to save the file to
  * @param {Array} endpoints Array of each endpoint
  */
-const generateControllerIndexFile = async (route, endpoints) => {
+const generateControllerIndexFile = async (service: string, route, endpoints) => {
 	// Create empty file
 	let file = '';
 
@@ -55,7 +55,9 @@ const generateControllerIndexFile = async (route, endpoints) => {
 `;
 
 	// Write the file
-	await writeFile(`./controllers/${route}/index.ts`, file);
+	await writeFile(`../${service}/controllers/${route}/index.ts`, file);
+
+	console.log(`Wrote ${service}/controllers/${route}/index.ts`);
 };
 
 /**
@@ -63,7 +65,7 @@ const generateControllerIndexFile = async (route, endpoints) => {
  * @param {String} route The route to save the endpoints under
  * @param {Object} endpoints The endpoint object for the given route
  */
-const generateRouteFile = async (route, endpoints) => {
+const generateRouteFile = async (service: string, route, endpoints) => {
 	let file = `import { Router } from 'express';
 const router = Router();
 
@@ -85,14 +87,16 @@ router.${data['type'].toLowerCase()}('/${
 	file += 'export default router;';
 
 	// Write the file
-	await writeFile(`./routes/${route}.ts`, file);
+	await writeFile(`../${service}/routes/${route}.ts`, file);
+
+	console.log(`Wrote ${service}/routes/${route}.ts`);
 };
 
 /**
  * Create an index file from the given routes
  * @param {Array} routes All the routes
  */
-const generateRouteIndexFile = async (routes) => {
+const generateRouteIndexFile = async (service: string, routes) => {
 	// Create empty file
 	let file = '';
 
@@ -110,8 +114,48 @@ const generateRouteIndexFile = async (routes) => {
 `;
 
 	/// Write the file
-	await writeFile(`./routes/index.ts`, file);
+	await writeFile(`../${service}/routes/index.ts`, file);
+
+	console.log(`Wrote ${service}/routes/index.ts`);
+};
+
+/**
+ * Generates TypeScript files for each route and endpoint in the `routesFile` object.
+ *
+ * @return {Promise<void>} A promise that resolves when all files have been generated.
+ */
+const generateTS = async (service: string, routes) => {
+	let routeList: string[] = [];
+
+	// Iterate through each route
+	for (const [route, endpoints] of Object.entries(routes)) {
+		// Push the route name to levelOne
+		routeList.push(route);
+
+		// Create an empty array for the endpoints of the current route
+		let currentRouteEndpoints: string[] = [];
+
+		await checkAndCreateDir(`../${service}/controllers/${route}`);
+
+		// Iterate through each endpoint
+		for (const [endpoint, data] of Object.entries(endpoints)) {
+			// Push the endpoint name to the current route endpoints
+			currentRouteEndpoints.push(endpoint);
+
+			// Generate the controller file
+			generateControllerFile(service, route, endpoint, data);
+		}
+
+		// Generate the controller index file
+		generateControllerIndexFile(service, route, Object.keys(endpoints));
+
+		// Generate the route file
+		generateRouteFile(service, route, endpoints);
+	}
+
+	// Generate the route index file
+	generateRouteIndexFile(service, Object.keys(routes));
 };
 
 
-export { generateControllerFile, generateControllerIndexFile, generateRouteFile, generateRouteIndexFile };
+export { generateTS };

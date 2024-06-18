@@ -1,11 +1,18 @@
 {
-  "name": "devtools",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC"
+	"name": "devtools",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"generateAPI": "ts-node ./tools/api/generateAPI.ts",
+		"generateLocales": "node ./tools/generateLocales.js"
+	},
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@types/node": "^20.14.5"
+	},
+	"dependencies": {
+		"ts-node": "^10.9.2"
+	}
 }

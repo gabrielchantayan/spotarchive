@@ -1,44 +1,36 @@
 import { readFile, writeFile } from 'fs/promises';
-import * as ts from './languages/ts'
+import { generateTS } from './languages/ts'
 import { checkAndCreateDir } from '../code/files';
 
 
 const main = async () => {
 	// Read the API Routes file and parse the JSON
-	const routesFileRAW: any = await readFile('./devtools/editables/apiRoutes.json');
+	const routesFileRAW: any = await readFile('./tools/api/apiRoutes.json');
 	const routesFile = JSON.parse(routesFileRAW);
 
-	let routeList: string[] = [];
 
-	// Iterate through each route
-	for (const [route, endpoints] of Object.entries(routesFile)) {
-		// Push the route name to levelOne
-		routeList.push(route);
 
-		// Create an empty array for the endpoints of the current route
-		let currentRouteEndpoints = [];
 
-		await checkAndCreateDir(`./controllers/${route}`);
+	// Iterate through each service in the routes file
+	for (const [service, serviceData] of Object.entries(routesFile)) {
 
-		// Iterate through each endpoint
-		for (const [endpoint, data] of Object.entries(endpoints)) {
-			// Push the endpoint name to the current route endpoints
-			currentRouteEndpoints.push(endpoint);
-
-			// Generate the controller file
-			ts.generateControllerFile(route, endpoint, data);
+		// Check what language the service is written in
+		switch (serviceData['language']) {
+			case 'ts':
+				await generateTS(service, serviceData['routes']);
+				break;
+			default:
+				break;
 		}
 
-		// Generate the controller index file
-		ts.generateControllerIndexFile(route, Object.keys(endpoints));
-
-		// Generate the route file
-		ts.generateRouteFile(route, endpoints);
 	}
 
-	// Generate the route index file
-	ts.generateRouteIndexFile(Object.keys(routesFile));
+
+
+	
 };
+
+
 
 
 main();
