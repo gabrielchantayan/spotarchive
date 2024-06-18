@@ -11,9 +11,7 @@
 		"dev-server": "nodemon -r dotenv/config server.ts dotenv_config_path=./.env.dev -e ts",
 		"dev-client": "npm run dev --prefix client",
 		"build": "npm run build --prefix client",
-		"dev": "concurrently \"npm run dev-server\" \"npm run dev-client\"",
-		"generateAPI": "ts-node ./devtools/tools/generateAPI.ts",
-		"generateLocales": "node ./devtools/tools/generateLocales.js"
+		"dev": "concurrently \"npm run dev-server\" \"npm run dev-client\""
 	},
 	"dependencies": {
 		"@types/bcrypt": "^5.0.2",

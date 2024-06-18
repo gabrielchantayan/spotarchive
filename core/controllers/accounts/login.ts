@@ -1,6 +1,6 @@
-import asyncWrapper from '../../../middleware/asyncWrapper';
-import { login as mainFunction } from '../../../utils/accounts/accounts';
-import { successHandler } from '../../../utils/misc/miscUtils';
+import asyncWrapper from '../../middleware/asyncWrapper';
+import { login as mainFunction } from '../../utils/accounts/accounts';
+import { successHandler } from '../../utils/misc/miscUtils';
 
 // Login
 // Logs in a user

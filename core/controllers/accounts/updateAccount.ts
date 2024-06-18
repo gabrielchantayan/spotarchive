@@ -1,6 +1,6 @@
-import asyncWrapper from '../../../middleware/asyncWrapper';
-import { updateAccount as mainFunction } from '../../../utils/accounts/accounts';
-import { successHandler } from '../../../utils/misc/miscUtils';
+import asyncWrapper from '../../middleware/asyncWrapper';
+import { updateAccount as mainFunction } from '../../utils/accounts/accounts';
+import { successHandler } from '../../utils/misc/miscUtils';
 
 // Update Account
 // Update information about a user's account
