@@ -1,6 +1,6 @@
-import asyncWrapper from '../../middleware/asyncWrapper.ts';
-import { createAccount as mainFunction } from '../../utils/accounts/accounts.js';
-import { successHandler } from '../../utils/misc/miscUtils.ts';
+import asyncWrapper from '../../middleware/asyncWrapper';
+import { createAccount as mainFunction } from '../../utils/accounts/accounts';
+import { successHandler } from '../../utils/misc/miscUtils';
 
 // Create Account
 // Creates an account given a username and hashed password.

@@ -50,9 +50,9 @@ const main = async () => {
 const generateControllerFile = async (route, endpoint, data) => {
 	// The file
 	let file = 
-`import asyncWrapper from '../../middleware/asyncWrapper.ts';
+`import asyncWrapper from '../../middleware/asyncWrapper';
 import { ${data.primaryFunction} as mainFunction } from '../../${data.primaryFunctionFile}';
-import { successHandler } from '../../utils/misc/miscUtils.ts';
+import { successHandler } from '../../utils/misc/miscUtils';
 
 // ${data.name}
 // ${data.description}
@@ -84,7 +84,7 @@ const generateControllerIndexFile = async (route, endpoints) => {
 	// Map every endpoint to an import
 	file += endpoints
 		.map((e) => {
-			return `import ${e} from './${e}.ts';`;
+			return `import ${e} from './${e}';`;
 		})
 		.join('\n');
 
@@ -108,7 +108,7 @@ const generateRouteFile = async (route, endpoints) => {
 	let file = `import { Router } from 'express';
 const router = Router();
 
-import ${route} from '../controllers/${route}/index.ts';
+import ${route} from '../controllers/${route}/index';
 `;
 
 	for (const [endpoint, data] of Object.entries(endpoints)) {
@@ -140,7 +140,7 @@ const generateRouteIndexFile = async (routes) => {
 	// Map every route to an import
 	file += routes
 		.map((e) => {
-			return `import ${e} from './${e}.ts';`;
+			return `import ${e} from './${e}';`;
 		})
 		.join('\n');
 

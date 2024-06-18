@@ -1,5 +1,5 @@
 import * as db from '../database/postgres';
-import { getAccountDataWithToken } from './accounts.js';
+import { getAccountDataWithToken } from './accounts';
 
 /**
  * Check an account permission

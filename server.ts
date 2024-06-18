@@ -1,10 +1,9 @@
 // Prereqs
 import express from 'express'; // Webserver
-import routes from './routes/index.js'; // API Routes
+import routes from './routes/index'; // API Routes
 import cors from 'cors';
 import initialize from './utils/server/initialize';
 import queryString from 'query-string';
-
 
 // Set up on port
 const port = process.env.PORT || 80;
@@ -12,15 +11,14 @@ const port = process.env.PORT || 80;
 // process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
 // Main function
-const main = ()  => {
+const main = () => {
 	// Setup express webserver
-	const app : any= express();
+	const app: any = express();
 
 	// CORS things
 	app.use(cors());
 	app.options('*', cors());
 
-	
 	/**
 	 * Middleware for allowing all origins, and all headers.
 	 * The next() function passes control to the next middleware
@@ -48,10 +46,8 @@ const main = ()  => {
 		app.use(`/api/${key}`, routes[key]);
 	}
 
-
 	var client_id = 'CLIENT_ID';
 	var redirect_uri = 'http://localhost:8888/callback';
-
 
 	app.get('/login', function (req, res) {
 		var state = 'dhwwow13odcv34dd';
@@ -60,7 +56,7 @@ const main = ()  => {
 
 		res.redirect(
 			'https://accounts.spotify.com/authorize?' +
-				querystring.stringify({
+				queryString.stringify({
 					response_type: 'code',
 					client_id: client_id,
 					scope: scope,
@@ -85,5 +81,11 @@ const main = ()  => {
 	});
 };
 
-await initialize();
-main();
+// Core loop
+// Do this to steer away from top-level await
+const core = async () => {
+	await initialize();
+	main();
+};
+
+core();

@@ -1,7 +1,7 @@
 import { Router } from 'express';
 const router = Router();
 
-import exampleRoutes from '../controllers/exampleRoutes/index.ts';
+import exampleRoutes from '../controllers/exampleRoutes/index';
 
 // GET Example
 // Example GET Route

@@ -3,7 +3,7 @@
 	"description": "Spotify Playlist Archiver",
 	"author": "Gabriel Chantayan",
 	"version": "0.0.0",
-	"main": "server.js",
+	"main": "server.ts",
 	"directories": {
 		"test": "tests"
 	},

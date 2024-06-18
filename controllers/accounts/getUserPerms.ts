@@ -1,6 +1,6 @@
-import asyncWrapper from '../../middleware/asyncWrapper.ts';
-import { getUserPermissions as mainFunction } from '../../utils/accounts/permissions.js';
-import { successHandler } from '../../utils/misc/miscUtils.ts';
+import asyncWrapper from '../../middleware/asyncWrapper';
+import { getUserPermissions as mainFunction } from '../../utils/accounts/permissions';
+import { successHandler } from '../../utils/misc/miscUtils';
 
 // Get User Permissions
 // Gets a user's permissions, returned as an array

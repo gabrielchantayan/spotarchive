@@ -1,6 +1,6 @@
-import asyncWrapper from '../../middleware/asyncWrapper.ts';
-import { getExample as mainFunction } from '../../utils/example/example.js';
-import { successHandler } from '../../utils/misc/miscUtils.ts';
+import asyncWrapper from '../../middleware/asyncWrapper';
+import { getExample as mainFunction } from '../../utils/example/example';
+import { successHandler } from '../../utils/misc/miscUtils';
 
 // GET Example
 // Example GET Route

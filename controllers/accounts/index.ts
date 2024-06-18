@@ -1,7 +1,7 @@
-import login from './login.ts';
-import createAccount from './createAccount.ts';
-import getUserPerms from './getUserPerms.ts';
-import updateAccount from './updateAccount.ts';
+import login from './login';
+import createAccount from './createAccount';
+import getUserPerms from './getUserPerms';
+import updateAccount from './updateAccount';
 
 export default {
 	login,

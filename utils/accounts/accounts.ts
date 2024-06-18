@@ -1,8 +1,8 @@
-import * as db from '../database/postgres.js';
+import * as db from '../database/postgres';
 import { successHandler } from '../misc/miscUtils';
-import * as password from './password.js';
+import * as password from './password';
 import { checkPermission } from './permissions';
-import { genToken } from './tokens.js';
+import { genToken } from './tokens';
 
 /**
  * Create an account
