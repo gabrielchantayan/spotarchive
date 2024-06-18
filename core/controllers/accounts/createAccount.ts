@@ -1,6 +1,6 @@
-import asyncWrapper from '../../middleware/asyncWrapper';
-import { createAccount as mainFunction } from '../../utils/accounts/accounts';
-import { successHandler } from '../../utils/misc/miscUtils';
+import asyncWrapper from '../../../middleware/asyncWrapper';
+import { createAccount as mainFunction } from '../../../utils/accounts/accounts';
+import { successHandler } from '../../../utils/misc/miscUtils';
 
 // Create Account
 // Creates an account given a username and hashed password.

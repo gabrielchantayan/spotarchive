@@ -1,45 +1,5 @@
 import { readFile, writeFile } from 'fs/promises';
-import { checkAndCreateDir } from '../../utils/misc/files';
-
-const main = async () => {
-	// Read the API Routes file and parse the JSON
-	const routesFileRAW: any = await readFile('./devtools/editables/apiRoutes.json');
-	const routesFile = JSON.parse(routesFileRAW);
-
-	// await checkAndCreateDir('./controllers');
-	// await checkAndCreateDir('./routes');
-
-	let routeList: string[] = [];
-
-	// Iterate through each route
-	for (const [route, endpoints] of Object.entries(routesFile)) {
-		// Push the route name to levelOne
-		routeList.push(route);
-
-		// Create an empty array for the endpoints of the current route
-		let currentRouteEndpoints = [];
-
-		await checkAndCreateDir(`./controllers/${route}`);
-
-		// Iterate through each endpoint
-		for (const [endpoint, data] of Object.entries(endpoints)) {
-			// Push the endpoint name to the current route endpoints
-			currentRouteEndpoints.push(endpoint);
-
-			// Generate the controller file
-			generateControllerFile(route, endpoint, data);
-		}
-
-		// Generate the controller index file
-		generateControllerIndexFile(route, Object.keys(endpoints));
-
-		// Generate the route file
-		generateRouteFile(route, endpoints);
-	}
-
-	// Generate the route index file
-	generateRouteIndexFile(Object.keys(routesFile));
-};
+import { checkAndCreateDir } from '../../code/files';
 
 /**
  * Generate an endpoint's controller file
@@ -48,11 +8,9 @@ const main = async () => {
  * @param {Object} data The endpoint's data as specified in apiRoutes.json
  */
 const generateControllerFile = async (route, endpoint, data) => {
-
-	console.log(data)
+	console.log(data);
 	// The file
-	let file = 
-`import asyncWrapper from '../../middleware/asyncWrapper';
+	let file = `import asyncWrapper from '../../middleware/asyncWrapper';
 import { ${data.primaryFunction} as mainFunction } from '../../${data.primaryFunctionFile}';
 import { successHandler } from '../../utils/misc/miscUtils';
 
@@ -98,7 +56,6 @@ const generateControllerIndexFile = async (route, endpoints) => {
 
 	// Write the file
 	await writeFile(`./controllers/${route}/index.ts`, file);
-	
 };
 
 /**
@@ -156,4 +113,5 @@ const generateRouteIndexFile = async (routes) => {
 	await writeFile(`./routes/index.ts`, file);
 };
 
-main();
+
+export { generateControllerFile, generateControllerIndexFile, generateRouteFile, generateRouteIndexFile };

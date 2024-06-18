@@ -1,7 +1,7 @@
 import { Router } from 'express';
 const router = Router();
 
-import accounts from '../controllers/accounts/index';
+import accounts from '../core/controllers/accounts/index';
 
 // Login
 // Logs in a user

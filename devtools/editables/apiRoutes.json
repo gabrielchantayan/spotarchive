@@ -1,33 +1,38 @@
 {
-	"accounts": {
-		"login": {
-			"name": "Login",
-			"description": "Logs in a user",
-			"type": "POST",
-			"primaryFunctionFile": "utils/accounts/accounts",
-			"primaryFunction": "login"
-		},
-		"createAccount": {
-			"name": "Create Account",
-			"description": "Creates an account given a username and hashed password.",
-			"type": "POST",
-			"primaryFunctionFile": "utils/accounts/accounts",
-			"primaryFunction": "createAccount"
-		},
-		"getUserPerms": {
-			"name": "Get User Permissions",
-			"description": "Gets a user's permissions, returned as an array",
-			"type": "POST",
-			"functionArgs" : "req.username, req.token",
-			"primaryFunctionFile": "utils/accounts/permissions",
-			"primaryFunction": "getUserPermissions"
-		},
-		"updateAccount": {
-			"name": "Update Account",
-			"description": "Update information about a user's account",
-			"type": "POST",
-			"primaryFunctionFile": "utils/accounts/accounts",
-			"primaryFunction": "updateAccount"
+	"core" : {
+		"language" : "ts",
+		"routes" : {
+			"accounts": {
+				"login": {
+					"name": "Login",
+					"description": "Logs in a user",
+					"type": "POST",
+					"primaryFunctionFile": "utils/accounts/accounts",
+					"primaryFunction": "login"
+				},
+				"createAccount": {
+					"name": "Create Account",
+					"description": "Creates an account given a username and hashed password.",
+					"type": "POST",
+					"primaryFunctionFile": "utils/accounts/accounts",
+					"primaryFunction": "createAccount"
+				},
+				"getUserPerms": {
+					"name": "Get User Permissions",
+					"description": "Gets a user's permissions, returned as an array",
+					"type": "POST",
+					"functionArgs": "req.username, req.token",
+					"primaryFunctionFile": "utils/accounts/permissions",
+					"primaryFunction": "getUserPermissions"
+				},
+				"updateAccount": {
+					"name": "Update Account",
+					"description": "Update information about a user's account",
+					"type": "POST",
+					"primaryFunctionFile": "utils/accounts/accounts",
+					"primaryFunction": "updateAccount"
+				}
+			}
 		}
 	}
 }
