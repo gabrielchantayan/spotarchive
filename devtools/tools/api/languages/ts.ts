@@ -1,4 +1,4 @@
-import { readFile, writeFile } from 'fs/promises';
+import { writeFile } from 'fs/promises';
 import { checkAndCreateDir } from '../../code/files';
 
 /**
@@ -28,14 +28,17 @@ export default ${endpoint};
 `;
 
 	// Write the file
-	await writeFile(`../${service}/controllers/${route}/${endpoint}.ts`, file);
-	console.log(`Wrote ${service}/controllers/${route}/${endpoint}.ts`);
+	await writeFile(`../${service}/controllers/${route}Controller/${endpoint}Controller.ts`, file);
+	console.log(`Wrote ${service}/controllers/${route}Controller/${endpoint}Controller.ts`);
 };
 
 /**
- * Create the controller index file for a route
- * @param {String} route The route to save the file to
- * @param {Array} endpoints Array of each endpoint
+ * This function generates the controller index file for a given route.
+ *
+ * @param {string} service - The name of the service.
+ * @param {string} route - The route to save the file to.
+ * @param {Array<string>} endpoints - An array of each endpoint.
+ * @returns {Promise<void>} - A promise that resolves when the file is written.
  */
 const generateControllerIndexFile = async (service: string, route, endpoints) => {
 	// Create empty file
@@ -43,21 +46,20 @@ const generateControllerIndexFile = async (service: string, route, endpoints) =>
 
 	// Map every endpoint to an import
 	file += endpoints
-		.map((e) => {
-			return `import ${e} from './${e}';`;
+		.map((endpoint) => {
+			// Generate each import statement
+			return `import ${endpoint} from './${endpoint}Controller';`;
 		})
 		.join('\n');
 
 	// Add the default export
-	file += `\n\nexport default {
-\t${endpoints.join(',\n\t')}
-};
-`;
+	file += `\n\n// Export all the controllers for the current route.\n`;
+	file += `export default {\n\t${endpoints.join(',\n\t')}\n};`;
 
 	// Write the file
-	await writeFile(`../${service}/controllers/${route}/index.ts`, file);
+	await writeFile(`../${service}/controllers/${route}Controller/index.ts`, file);
 
-	console.log(`Wrote ${service}/controllers/${route}/index.ts`);
+	console.log(`Wrote ${service}/controllers/${route}Controller/index.ts`);
 };
 
 /**
@@ -69,7 +71,7 @@ const generateRouteFile = async (service: string, route, endpoints) => {
 	let file = `import { Router } from 'express';
 const router = Router();
 
-import ${route} from '../controllers/${route}/index';
+import ${route} from '../controllers/${route}Controller/index';
 `;
 
 	for (const [endpoint, data] of Object.entries(endpoints)) {
@@ -87,33 +89,34 @@ router.${data['type'].toLowerCase()}('/${
 	file += 'export default router;';
 
 	// Write the file
-	await writeFile(`../${service}/routes/${route}.ts`, file);
+	await writeFile(`../${service}/routes/${route}Routes.ts`, file);
 
-	console.log(`Wrote ${service}/routes/${route}.ts`);
+	console.log(`Wrote ${service}/routes/${route}Routes.ts`);
 };
 
 /**
- * Create an index file from the given routes
- * @param {Array} routes All the routes
+ * Creates an index file that exports all the given routes.
+ *
+ * @param {string} service - The name of the service.
+ * @param {Array<string>} routes - The routes to export.
+ * @return {Promise<void>} - A promise that resolves when the file is written.
  */
-const generateRouteIndexFile = async (service: string, routes) => {
-	// Create empty file
+const generateRouteIndexFile = async (service: string, routes: Array<string>) => {
+	// Create an empty file.
 	let file = '';
 
-	// Map every route to an import
+	// Map every route to an import statement.
 	file += routes
-		.map((e) => {
-			return `import ${e} from './${e}';`;
+		.map((route) => {
+			return `import ${route} from './${route}Routes';`;
 		})
 		.join('\n');
 
-	// Add the default export
-	file += `\n\nexport default {
-\t${routes.join(',\n\t')}
-};
-`;
+	// Add the default export.
+	file += `\n\n// Export all the routes.`;
+	file += `\nexport default {\n\t${routes.join(',\n\t')}\n};`;
 
-	/// Write the file
+	/// Write the file.
 	await writeFile(`../${service}/routes/index.ts`, file);
 
 	console.log(`Wrote ${service}/routes/index.ts`);
@@ -122,20 +125,24 @@ const generateRouteIndexFile = async (service: string, routes) => {
 /**
  * Generates TypeScript files for each route and endpoint in the `routesFile` object.
  *
+ * @param {string} service - The name of the service.
+ * @param {Object} routes - The routes object.
  * @return {Promise<void>} A promise that resolves when all files have been generated.
  */
 const generateTS = async (service: string, routes) => {
+	// Initialize an array to hold the route names
 	let routeList: string[] = [];
 
 	// Iterate through each route
 	for (const [route, endpoints] of Object.entries(routes)) {
-		// Push the route name to levelOne
+		// Push the route name to the route list
 		routeList.push(route);
 
 		// Create an empty array for the endpoints of the current route
 		let currentRouteEndpoints: string[] = [];
 
-		await checkAndCreateDir(`../${service}/controllers/${route}`);
+		// Create the necessary directory for the current route
+		await checkAndCreateDir(`../${service}/controllers/${route}Controller`);
 
 		// Iterate through each endpoint
 		for (const [endpoint, data] of Object.entries(endpoints)) {
@@ -156,6 +163,5 @@ const generateTS = async (service: string, routes) => {
 	// Generate the route index file
 	generateRouteIndexFile(service, Object.keys(routes));
 };
-
 
 export { generateTS };
