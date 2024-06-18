@@ -1,10 +1,11 @@
 import { initDB } from "../database/postgres"
+import { log } from "../misc/logger";
 
 const initialize = async () => {
 
 
     // Initialize DB
-    console.log('Initializing database...');
+    log('Initializing database...');
     await initDB();
 
 }
