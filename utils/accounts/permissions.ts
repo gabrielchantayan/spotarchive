@@ -1,79 +1,79 @@
-// import * as db from '../database/postgres';
-// import { getAccountDataWithToken } from './accounts.js';
+import * as db from '../database/postgres';
+import { getAccountDataWithToken } from './accounts.js';
 
-// /**
-//  * Check an account permission
-//  * @param {String} wanted The wanted permission
-//  * @param {String} username
-//  * @param {String} token
-//  * @returns Bool
-//  */
-// const checkPermission = async (wanted, username, token) => {
-// 	// Get the account data
-// 	const account = await getAccountDataWithToken(username, token);
+/**
+ * Check an account permission
+ * @param {String} wanted The wanted permission
+ * @param {String} username
+ * @param {String} token
+ * @returns Bool
+ */
+const checkPermission = async (wanted, username, token) => {
+	// Get the account data
+	const account = await getAccountDataWithToken(username, token);
 
-// 	// Return if the user has the wanted permission
-// 	return (
-// 		account.data.permissions.includes(wanted) ||
-// 		account.data.permissions.includes('Superuser')
-// 	);
-// };
+	// Return if the user has the wanted permission
+	return (
+		account['data'].permissions.includes(wanted) ||
+		account['data'].permissions.includes('Superuser')
+	);
+};
 
-// /**
-//  * Check if a user has permissions to access a page
-//  * @param {String} pageURL The url of the wanted page
-//  * @param {String} username
-//  * @param {String} token
-//  * @returns Bool
-//  */
-// const checkPagePermission = async (pageURL, username, token) => {
-// 	// Get the account data
-// 	const account = await getAccountDataWithToken(username, token);
+/**
+ * Check if a user has permissions to access a page
+ * @param {String} pageURL The url of the wanted page
+ * @param {String} username
+ * @param {String} token
+ * @returns Bool
+ */
+const checkPagePermission = async (pageURL, username, token) => {
+	// Get the account data
+	const account = await getAccountDataWithToken(username, token);
 
-// 	// Get the page data
-// 	const page = await db.findOne('pages', { url: pageURL });
+	// Get the page data
+	const page = await db.findOne('pages', { url: pageURL });
 
-// 	// Return if user has permissions to access
-// 	return account.data.permissions.includes(page['permissions']);
-// };
+	// Return if user has permissions to access
+	return account['data'].permissions.includes(page['permissions']);
+};
 
-// const listAllPermissiblePages = async (username, token) => {
-// 	// Get the account data
-// 	const account = await getAccountDataWithToken(username, token);
+const listAllPermissiblePages = async (username, token) => {
+	// Get the account data
+	const account = await getAccountDataWithToken(username, token);
 
-// 	if (account.success == false) {
-// 		return [];
-// 	}
+	if (account.success == false) {
+		return [];
+	}
 
-// 	// Get all the pages
-// 	const pages = await db.find('pages');
+	// Get all the pages
+	const pages: any = await db.find('pages');
 
-// 	console.log(account);
+	console.log(account);
 
-// 	// Give them all the pages if theyre a superuser
-// 	if (account.data.permissions.includes('Superuser')) return pages;
+	// Give them all the pages if theyre a superuser
+	if (account['data'].permissions.includes('Superuser')) return pages;
 
-// 	let accessiblePages = [];
+	let accessiblePages = [];
 
-// 	pages.forEach((page) => {
-// 		if (account.data.permissions.includes(page['permissions']))
-// 			accessiblePages.push(page);
-// 	});
+	pages.forEach((page) => {
+		if (account['data'].permissions.includes(page['permissions']))
+			accessiblePages.push(page);
+	});
 
-// 	return accessiblePages;
-// };
+	return accessiblePages;
+};
 
-// const getUserPermissions = async (username, token) => {
-// 	// Get the account data
-// 	const account = await getAccountDataWithToken(username, token);
+const getUserPermissions = async (username, token) => {
+	// Get the account data
+	const account = await getAccountDataWithToken(username, token);
 
-// 	if (account.success) return account.data.permissions;
-// 	else return [];
-// };
+	if (account.success) return account['data'].permissions;
+	else return [];
+};
 
-// export {
-// 	checkPermission,
-// 	checkPagePermission,
-// 	listAllPermissiblePages,
-// 	getUserPermissions,
-// };
+export {
+	checkPermission,
+	checkPagePermission,
+	listAllPermissiblePages,
+	getUserPermissions,
+};

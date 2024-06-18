@@ -1,5 +1,5 @@
 import * as db from '../database/postgres.js';
-import { successHandler } from '../misc/miscUtils.ts';
+import { successHandler } from '../misc/miscUtils';
 
 /**
  * Generates a random token

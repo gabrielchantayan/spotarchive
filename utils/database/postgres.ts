@@ -1,7 +1,7 @@
 
 
 //Import postgres
-import pg from 'pg';
+import * as pg from 'pg';
 
 
 
@@ -15,11 +15,11 @@ const client = new Client({
 	password: process.env.DB_PASS,
 	database: process.env.DB_NAME,
 });
-await client.connect();
+// await client.connect();
 
-const res = await client.query('SELECT $1::text as message', ['Hello world!']);
-console.log(res.rows[0].message); // Hello world!
-await client.end();
+// const res = await client.query('SELECT $1::text as message', ['Hello world!']);
+// console.log(res.rows[0].message); // Hello world!
+// await client.end();
 
 /**
  * Initializes the database by connecting to it and creating the "spotarchive" database if it doesn't exist.
@@ -87,6 +87,13 @@ const findOne = async (table: string, query) => {
 
 }
 
+const find = async ( query) => {
 
-export { initDB, createTable, checkIfExists, insert, findAll, findOne };
+}
+
+const update = async (table : string, query, updatedValue) => {
+
+}
+
+export { initDB, createTable, checkIfExists, insert, findAll, findOne , find, update};
 

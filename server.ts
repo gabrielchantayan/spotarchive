@@ -2,8 +2,8 @@
 import express from 'express'; // Webserver
 import routes from './routes/index.js'; // API Routes
 import cors from 'cors';
-import initialize from './utils/server/initialize.ts';
-import querystring from 'querystring';
+import initialize from './utils/server/initialize';
+import queryString from 'query-string';
 
 
 // Set up on port
@@ -71,7 +71,7 @@ const main = ()  => {
 	});
 
 	// If we are in prod, use the build folder
-	if (process.env.NODE_ENV == 'prod') {
+	if (process.env.NODE_ENV == 'production') {
 		app.use(express.static('client/build'));
 
 		app.get('*', (req, res) => {

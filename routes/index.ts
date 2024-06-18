@@ -1,5 +1,5 @@
-import exampleRoutes from './exampleRoutes.ts';
-import accounts from './accounts.ts';
+import exampleRoutes from './exampleRoutes';
+import accounts from './accounts';
 
 export default {
 	exampleRoutes,
