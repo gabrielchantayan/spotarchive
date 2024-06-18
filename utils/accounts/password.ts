@@ -7,8 +7,8 @@ const saltRounds = 10;
  * @param {String} password Plaintext password
  * @returns {String} Hashed Password
  */
-const hashPassword = async (password) => {
-	const hash = await bcrypt.hash(password, saltRounds);
+const hashPassword = async (password: string) => {
+	const hash: string = await bcrypt.hash(password, saltRounds);
 	return hash;
 };
 
@@ -18,8 +18,8 @@ const hashPassword = async (password) => {
  * @param {String} hashedPassword Hashed password from the DB
  * @returns {Boolean} True if matched, false if not
  */
-const checkMatchingHash = async (password, hashedPassword) => {
-	const match = await bcrypt.compare(password, hashedPassword);
+const checkMatchingHash = async (password: string, hashedPassword: string) => {
+	const match: boolean = await bcrypt.compare(password, hashedPassword);
 	return match;
 };
 

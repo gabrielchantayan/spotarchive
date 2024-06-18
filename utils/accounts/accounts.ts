@@ -1,7 +1,7 @@
-import * as db from '../database/mongo.js';
-import { successHandler } from '../misc/miscUtils.js';
+import * as db from '../database/postgres.js';
+import { successHandler } from '../misc/miscUtils.ts';
 import * as password from './password.js';
-import { checkPermission } from './permissions.js';
+import { checkPermission } from './permissions.ts';
 import { genToken } from './tokens.js';
 
 /**
@@ -13,12 +13,12 @@ const createAccount = async (data) => {
 	console.log(data);
 
 	// Verify that the username doesn't already exist in the system
-	let existingAccount = await db.checkIfExists('users', {
+	let existingAccount: boolean = await db.checkIfExists('users', {
 		username: data['username'],
 	});
 
 	// If it doesnt
-	if (existingAccount == 0) {
+	if (existingAccount == false) {
 		// Hash and salt the password
 		let hashedPassword = await password.hashPassword(data['password']);
 
@@ -33,7 +33,8 @@ const createAccount = async (data) => {
 
 		return successHandler(
 			true,
-			`Successfully created user ${data['username']}`
+			`Successfully created user ${data['username']}`,
+			null
 		);
 	}
 
@@ -42,7 +43,8 @@ const createAccount = async (data) => {
 		console.log('Exists!');
 		return successHandler(
 			false,
-			`User ${data['username']} already exists!`
+			`User ${data['username']} already exists!`,
+			null
 		);
 	}
 };
@@ -69,7 +71,8 @@ const updateAccount = async (data) => {
 		) {
 			return successHandler(
 				false,
-				'User does not have permissions to change passwords'
+				'User does not have permissions to change passwords',
+				null
 			);
 		} else {
 			// Hash the password
@@ -90,7 +93,8 @@ const updateAccount = async (data) => {
 
 			return successHandler(
 				true,
-				`Updated password for ${data['data']['username']}`
+				`Updated password for ${data['data']['username']}`,
+				null
 			);
 		}
 	}
@@ -120,7 +124,8 @@ const updateAccount = async (data) => {
 		) {
 			return successHandler(
 				false,
-				'User does not have permissions to update information.'
+				'User does not have permissions to update information.',
+				null
 			);
 		} else {
 			// Just to be safe
@@ -136,7 +141,8 @@ const updateAccount = async (data) => {
 
 			return successHandler(
 				true,
-				`Updated info for ${data['data']['username']}`
+				`Updated info for ${data['data']['username']}`,
+				null
 			);
 		}
 	}
@@ -148,7 +154,7 @@ const updateAccount = async (data) => {
  */
 const getListOfUsers = async (data) => {
 	// Get a list of all users from the DB
-	const retUsers = await db.findAll('users');
+	const retUsers: any = await db.findAll('users');
 
 	// Return array
 	let ret = [];
@@ -175,47 +181,47 @@ const login = async (data) => {
 	});
 
 	// If the account does not exist, return with an error message
-	if (existingAccount == 0) {
+	if (existingAccount == false) {
 		console.log('User does not exist!');
-		return successHandler(false, 'Incorrect username or password');
+		return successHandler(false, 'Incorrect username or password', null);
 	} else {
 		console.log('Exists!');
 
 		// Grab the user's data
-		const userData = await db.findOne('users', {
-			username: data['username'],
-		});
+		// const userData = await db.findOne('users', {
+		// 	username: data['username'],
+		// });
 
-		if (!userData['active'])
-			return successHandler(false, 'User is not active');
+		// if (!userData['active'])
+		// 	return successHandler(false, 'User is not active', null);
 
-		// Check if the password matches
-		const passwordMatches = await password.checkMatchingHash(
-			data['password'],
-			userData['password']
-		);
+		// // Check if the password matches
+		// const passwordMatches = await password.checkMatchingHash(
+		// 	data['password'],
+		// 	userData['password']
+		// );
 
-		// If it does...
-		if (passwordMatches) {
-			// Generate a token
-			let token = genToken();
+		// // If it does...
+		// if (passwordMatches) {
+		// 	// Generate a token
+		// 	let token = genToken();
 
-			const setNewLogin = await db.update(
-				'users',
-				{ username: data['username'] },
-				{
-					token: token,
-					lastLogin: Date.now(),
-				}
-			);
+		// 	// const setNewLogin = await db.update(
+		// 	// 	'users',
+		// 	// 	{ username: data['username'] },
+		// 	// 	{
+		// 	// 		token: token,
+		// 	// 		lastLogin: Date.now(),
+		// 	// 	}
+		// 	// );
 
-			return successHandler(true, 'User logged in', { token: token });
-		}
+		// 	return successHandler(true, 'User logged in', { token: token });
+		// }
 
-		// Otherwise, return false with an error message
-		else {
-			return successHandler(false, 'Incorrect username or password');
-		}
+		// // Otherwise, return false with an error message
+		// else {
+		// 	return successHandler(false, 'Incorrect username or password');
+		// }
 	}
 };
 
@@ -232,8 +238,8 @@ const getAccountDataWithToken = async (username, token) => {
 	});
 
 	// If the account does not exist, return with an error message
-	if (existingAccount == 0) {
-		return successHandler(false, 'Invalid session');
+	if (existingAccount == false) {
+		return successHandler(false, 'Invalid session', null);
 	} else {
 		const userData = await db.findOne('users', {
 			username: username,
@@ -255,10 +261,10 @@ const getAccountData = async (username) => {
 	});
 
 	// If the account does not exist, return with an error message
-	if (existingAccount == 0) {
-		return successHandler(false, 'Invalid session');
+	if (existingAccount == false) {
+		return successHandler(false, 'Invalid session', null);
 	} else {
-		let userData = await db.findOne('users', { username: username });
+		let userData: any = await db.findOne('users', { username: username });
 		delete userData.token;
 		delete userData.password;
 
@@ -270,16 +276,16 @@ const getAccountData = async (username) => {
 const updateOwnPassword = async (data) => {
 	const hashedPassword = await password.hashPassword(data['password']);
 
-	const setNewPassword = await db.update(
-		'users',
-		{ username: data['username'], token: data['token'] },
-		{
-			password: hashedPassword,
-			lastChangedPassword: Date.now(),
-		}
-	);
+	// const setNewPassword = await db.update(
+	// 	'users',
+	// 	{ username: data['username'], token: data['token'] },
+	// 	{
+	// 		password: hashedPassword,
+	// 		lastChangedPassword: Date.now(),
+	// 	}
+	// );
 
-	return successHandler(true, 'Updated password')
+	// return successHandler(true, 'Updated password')
 };
 
 export {

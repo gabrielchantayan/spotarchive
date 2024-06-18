@@ -1,15 +1,15 @@
 import { readFile, writeFile } from 'fs/promises';
-import { checkAndCreateDir } from '../../utils/misc/files.js';
+import { checkAndCreateDir } from '../../utils/misc/files.ts';
 
 const main = async () => {
 	// Read the API Routes file and parse the JSON
-	const routesFileRAW = await readFile('./devtools/editables/apiRoutes.json');
+	const routesFileRAW: any = await readFile('./devtools/editables/apiRoutes.json');
 	const routesFile = JSON.parse(routesFileRAW);
 
-	await checkAndCreateDir('./controllers');
-	await checkAndCreateDir('./routes');
+	// await checkAndCreateDir('./controllers');
+	// await checkAndCreateDir('./routes');
 
-	let routeList = [];
+	let routeList: string[] = [];
 
 	// Iterate through each route
 	for (const [route, endpoints] of Object.entries(routesFile)) {
@@ -50,9 +50,9 @@ const main = async () => {
 const generateControllerFile = async (route, endpoint, data) => {
 	// The file
 	let file = 
-`import asyncWrapper from '../../middleware/asyncWrapper.js';
+`import asyncWrapper from '../../middleware/asyncWrapper.ts';
 import { ${data.primaryFunction} as mainFunction } from '../../${data.primaryFunctionFile}';
-import { successHandler } from '../../utils/misc/miscUtils.js';
+import { successHandler } from '../../utils/misc/miscUtils.ts';
 
 // ${data.name}
 // ${data.description}
@@ -68,12 +68,12 @@ export default ${endpoint};
 `;
 
 	// Write the file
-	await writeFile(`./controllers/${route}/${endpoint}.js`, file);
-	console.log(`Wrote ./controllers/${route}/${endpoint}.js`);
+	await writeFile(`./controllers/${route}/${endpoint}.ts`, file);
+	console.log(`Wrote ./controllers/${route}/${endpoint}.ts`);
 };
 
 /**
- * Create the controller index file for a routeß
+ * Create the controller index file for a route
  * @param {String} route The route to save the file to
  * @param {Array} endpoints Array of each endpoint
  */
@@ -84,7 +84,7 @@ const generateControllerIndexFile = async (route, endpoints) => {
 	// Map every endpoint to an import
 	file += endpoints
 		.map((e) => {
-			return `import ${e} from './${e}.js';`;
+			return `import ${e} from './${e}.ts';`;
 		})
 		.join('\n');
 
@@ -95,7 +95,7 @@ const generateControllerIndexFile = async (route, endpoints) => {
 `;
 
 	// Write the file
-	await writeFile(`./controllers/${route}/index.js`, file);
+	await writeFile(`./controllers/${route}/index.ts`, file);
 	
 };
 
@@ -108,7 +108,7 @@ const generateRouteFile = async (route, endpoints) => {
 	let file = `import { Router } from 'express';
 const router = Router();
 
-import ${route} from '../controllers/${route}/index.js';
+import ${route} from '../controllers/${route}/index.ts';
 `;
 
 	for (const [endpoint, data] of Object.entries(endpoints)) {
@@ -126,7 +126,7 @@ router.${data.type.toLowerCase()}('/${
 	file += 'export default router;';
 
 	// Write the file
-	await writeFile(`./routes/${route}.js`, file);
+	await writeFile(`./routes/${route}.ts`, file);
 };
 
 /**
@@ -140,7 +140,7 @@ const generateRouteIndexFile = async (routes) => {
 	// Map every route to an import
 	file += routes
 		.map((e) => {
-			return `import ${e} from './${e}.js';`;
+			return `import ${e} from './${e}.ts';`;
 		})
 		.join('\n');
 
@@ -151,7 +151,7 @@ const generateRouteIndexFile = async (routes) => {
 `;
 
 	/// Write the file
-	await writeFile(`./routes/index.js`, file);
+	await writeFile(`./routes/index.ts`, file);
 };
 
 main();

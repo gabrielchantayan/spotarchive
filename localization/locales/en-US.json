@@ -1,12 +1,15 @@
 {
-    "info" : {
-        "version" : 1,
-        "locale" : "en-US",
-        "name" : "English (US)"
-    },
-    "entries" : {
-		"someText": "This is some text.",
-		"someMoreText": "This is some more text",
-		"engOnly": "This is a string that only exists in English. Other languages will use this for fallback"
+	"info": {
+		"version": 1,
+		"locale": "en-US",
+		"name": "English (US)"
+	},
+	"entries": {
+		"introText": "Archive your {{SPOTIFY}} playlists.",
+		"tagline": "Don't miss out on any of your music.",
+		"discoverWeekly": "Discover Weekly",
+		"daylist": "Daylist",
+		"home": "Home",
+		"settings": "Settings"
 	}
 }

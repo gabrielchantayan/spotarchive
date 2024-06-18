@@ -1,5 +1,5 @@
-import * as db from '../database/mongo.js';
-import { successHandler } from '../misc/miscUtils.js';
+import * as db from '../database/postgres.js';
+import { successHandler } from '../misc/miscUtils.ts';
 
 /**
  * Generates a random token
@@ -13,18 +13,18 @@ const genToken = () => {
 
 const verifyLogin = async (username, token) => {
 	// Verify if there exists an entry with the username and token combo
-	const existingAccount = await db.checkIfExists('users', {
+	const existingAccount: boolean = await db.checkIfExists('users', {
 		username: username,
 		token: token,
 	});
 
 	// If it exists, return true
-	if (existingAccount == 1) {
-		return successHandler(true);
+	if (existingAccount == true) {
+		return successHandler(true, null, null);
 	}
 	// Else, return false for invalid session error
 	else {
-		return successHandler(false, 'Invalid session');
+		return successHandler(false, 'Invalid session', null);
 	}
 };
 

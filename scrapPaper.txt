@@ -1,0 +1,20 @@
+docker run  -p 3306:3306 -d --name mariadb --env MARIADB_USER=spotarchive --env MARIADB_PASSWORD=Password1234! --env MARIADB_DATABASE=spotarchive --env MARIADB_ROOT_PASSWORD=saPassword1234!  mariadb:latest
+
+docker run -p 5432:5432 --name postgres -e POSTGRES_PASSWORD=Password1234! -e POSTGRES_USER=postgres -d postgres
+
+
+Table daylist
+Key | User | Daylist Name | Daylist Adjectives (Name split by " ") | Timestamp
+
+Table daylist songs
+Key | Daylist Key | Song URI | Title | Artist | Album
+
+Table discover weekly
+Key | User | Week | Song URI | Title | Artist | Album
+
+Table Users
+Key | User | Spotify Auth creds
+
+
+
+can i fuckin like,,,, 
