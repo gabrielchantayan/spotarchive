@@ -65,7 +65,7 @@ const main = async () => {
 	// Iterate through locales
 	for (let defaultLocale of localeList) {
 		// Read then parse the locale file
-		let locale = await readFile(`localization/locales/${defaultLocale}.json`);
+		let locale: any = await readFile(`localization/locales/${defaultLocale}.json`);
 		locale = JSON.parse(locale);
 
 		// Set it in to the locale data
