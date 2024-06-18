@@ -1,5 +1,5 @@
 import { readFile, writeFile } from 'fs/promises';
-import { checkAndCreateDir } from '../../utils/misc/files.ts';
+import { checkAndCreateDir } from '../../utils/misc/files';
 
 const main = async () => {
 	// Read the API Routes file and parse the JSON
@@ -113,10 +113,10 @@ import ${route} from '../controllers/${route}/index.ts';
 
 	for (const [endpoint, data] of Object.entries(endpoints)) {
 		file += `
-// ${data.name}
-// ${data.description}
-router.${data.type.toLowerCase()}('/${
-			data.hasOwnProperty('endpoint') ? data.endpoint : endpoint
+// ${data['name']}
+// ${data['description']}
+router.${data['type'].toLowerCase()}('/${
+			data.hasOwnProperty('endpoint') ? data['endpoint'] : endpoint
 		}', (req, res) => {
     return ${route}.${endpoint}(req, res);
 });
