@@ -11,8 +11,8 @@ Core Functionality
 
 **App** The application
 
-**User** User authentication service and friend service
+**User** (:22302) User authentication service and friend service
 
-**Core** The core functionality of the app, recommendations, playlist saving, ect
+**Core** (:22301) The core functionality of the app, recommendations, playlist saving, ect
 
-**Spotify** Service that interacts directly with Spotify
+**Spotify** (:22303) Service that interacts directly with Spotify

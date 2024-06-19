@@ -5,7 +5,7 @@ import cors from 'cors';
 import initialize from './utils/server/initialize';
 
 // Set up on port
-const port = process.env.PORT || 80;
+const port = 22302;
 
 // process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = 0;
 
