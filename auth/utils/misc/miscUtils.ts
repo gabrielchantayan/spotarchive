@@ -6,7 +6,7 @@
  * @param {any} [data] - Whatever data to return (Optional)
  * @returns {Object} - The success message object.
  */
-const successHandler = (success: boolean, message?: string, data?: any) => {
+const successHandler = (success: boolean, message?: string, data?: any): { success: boolean, message?: string, data?: any } => {
 	// Create the return. Set success to FALSE if nothing is provided
 	let ret = {
 		success: success || false, // Set success to false if nothing is provided
@@ -32,7 +32,7 @@ const successHandler = (success: boolean, message?: string, data?: any) => {
  */
 const stringifyJSON = (json: any): string => {
 	// Create the return
-	return JSON.stringify(json, null, 2);
-};
+	return JSON.stringify(json, null, 2); 
+}
 
 export { successHandler, stringifyJSON };
